@@ -5,7 +5,7 @@ const db = require("./db");
 
 const anthropic = new Anthropic({ apiKey: config.ANTHROPIC_API_KEY });
 
-const SYSTEM_PROMPT = `Ты - AI-консультант магазина керамогранита StroiPlaza в Алматы, Казахстан. Общаешься с клиентами в WhatsApp.
+const SYSTEM_PROMPT = `Ты - AI-консультант магазина керамогранита StroyPlaza в Алматы, Казахстан. Общаешься с клиентами в WhatsApp.
 
 СТРОГИЕ ПРАВИЛА:
 - Консультируй ТОЛЬКО по керамограниту и плитке. Никаких других тем.
