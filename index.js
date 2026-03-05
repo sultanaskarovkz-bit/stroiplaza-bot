@@ -50,14 +50,16 @@ async function handleMessage(from, text) {
     await wa.sendText(from, result.text);
     addToHistory(from, "assistant", result.text);
 
-    const toSend = result.products.slice(0, 5);
+    const toSend = result.products.slice(0, 8);
     for (const product of toSend) {
       await wa.sendProduct(from, product);
       await new Promise((r) => setTimeout(r, 1000));
     }
 
-    if (result.products.length > 5) {
-      await wa.sendText(from, `Еще ${result.products.length - 5} вариантов. Уточните запрос, чтобы сузить выбор.`);
+    if (result.products.length > 8) {
+      const left = result.products.length - 8;
+      const word = left === 1 ? "вариант" : left < 5 ? "варианта" : "вариантов";
+      await wa.sendText(from, `Еще ${left} ${word}. Уточните запрос, чтобы сузить выбор.`);
     }
   } else if (result.type === "order" && result.order) {
     // Send confirmation to client
