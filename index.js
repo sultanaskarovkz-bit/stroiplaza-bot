@@ -118,6 +118,36 @@ app.get("/", (req, res) => {
   res.json({ status: "ok", bot: "StroiPlaza WhatsApp Bot", provider: config.WA_PROVIDER });
 });
 
+// Privacy Policy
+app.get("/privacy", (req, res) => {
+  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Privacy Policy - StroiPlaza</title></head><body style="font-family:Arial;max-width:800px;margin:40px auto;padding:0 20px">
+  <h1>Политика конфиденциальности</h1><p><strong>StroiPlaza</strong> - магазин керамогранита, Алматы, Казахстан.</p>
+  <h2>Какие данные мы собираем</h2><p>При обращении через WhatsApp мы получаем ваш номер телефона и текст сообщений для обработки запроса и подбора товаров.</p>
+  <h2>Как используем данные</h2><p>Данные используются исключительно для консультации по товарам и обработки заявок. Мы не передаем ваши данные третьим лицам.</p>
+  <h2>Хранение данных</h2><p>Переписка хранится в течение сеанса общения и не сохраняется после его завершения.</p>
+  <h2>Контакты</h2><p>По вопросам обработки данных: +7 707 191 9008, artsignstudio.kz@gmail.com</p>
+  <p>Дата обновления: март 2026</p></body></html>`);
+});
+
+// Terms of Service
+app.get("/terms", (req, res) => {
+  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Terms - StroiPlaza</title></head><body style="font-family:Arial;max-width:800px;margin:40px auto;padding:0 20px">
+  <h1>Условия использования</h1><p><strong>StroiPlaza</strong> - магазин керамогранита, Алматы, Казахстан.</p>
+  <h2>Описание сервиса</h2><p>WhatsApp-бот StroiPlaza предоставляет автоматизированную консультацию по ассортименту керамогранита. Бот помогает подобрать плитку и оформить заявку.</p>
+  <h2>Ограничения</h2><p>Информация от бота носит справочный характер. Окончательные цены и наличие уточняйте у менеджера. Фото могут отличаться от реального товара.</p>
+  <h2>Контакты</h2><p>Телефон: +7 707 191 9008</p><p>Адрес: ул. Тараз 16, Алматы</p>
+  <p>Дата обновления: март 2026</p></body></html>`);
+});
+
+// Data Deletion
+app.get("/data-deletion", (req, res) => {
+  res.send(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Data Deletion - StroiPlaza</title></head><body style="font-family:Arial;max-width:800px;margin:40px auto;padding:0 20px">
+  <h1>Удаление данных</h1>
+  <p>Для удаления ваших данных свяжитесь с нами:</p>
+  <p>Email: artsignstudio.kz@gmail.com</p><p>Телефон: +7 707 191 9008</p>
+  <p>Мы удалим все связанные с вами данные в течение 30 дней.</p></body></html>`);
+});
+
 app.listen(config.PORT, () => {
   console.log(`\n=== StroiPlaza Bot ===`);
   console.log(`Provider: ${config.WA_PROVIDER}`);
