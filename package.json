@@ -1,0 +1,16 @@
+{
+  "name": "stroiplaza-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp AI bot for StroiPlaza tile store",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@supabase/supabase-js": "^2.49.1",
+    "express": "^4.21.2",
+    "axios": "^1.7.9"
+  }
+}
