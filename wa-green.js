@@ -32,7 +32,7 @@ async function sendImage(to, imageUrl, caption) {
 }
 
 async function sendProduct(to, product) {
-  const caption = `${product.name_ru}\nРазмер: ${product.size}\nЦена: ${product.price} тг/шт${product.article ? "\nАрт: " + product.article : ""}`;
+  const caption = `${product.name_ru}\nРазмер: ${product.size}\nЦена: ${product.price} тг/м2${product.article ? "\nАрт: " + product.article : ""}`;
   if (product.image_url) {
     await sendImage(to, product.image_url, caption);
   } else {

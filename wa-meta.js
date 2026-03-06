@@ -40,7 +40,7 @@ async function sendImage(to, imageUrl, caption) {
 
 // Send product card: photo + caption with name, size, price
 async function sendProduct(to, product) {
-  const caption = `${product.name_ru}\nРазмер: ${product.size}\nЦена: ${product.price} тг/шт${product.article ? "\nАрт: " + product.article : ""}`;
+  const caption = `${product.name_ru}\nРазмер: ${product.size}\nЦена: ${product.price} тг/м2${product.article ? "\nАрт: " + product.article : ""}`;
   if (product.image_url) {
     await sendImage(to, product.image_url, caption);
   } else {
@@ -57,6 +57,16 @@ function parseWebhook(body) {
     const msg = value?.messages?.[0];
 
     if (!msg) return null;
+
+    // Voice/audio message
+    if (msg.type === "audio") {
+      return {
+        from: msg.from,
+        text: "__VOICE_MESSAGE__",
+        type: "audio",
+        timestamp: msg.timestamp,
+      };
+    }
 
     return {
       from: msg.from,

@@ -27,6 +27,9 @@ function addToHistory(phone, role, content) {
   if (history.length > 10) history.splice(0, history.length - 10);
 }
 
+// Track known clients
+const knownClients = new Set();
+
 // Send order notification to manager
 async function notifyManager(from, order) {
   const text = `🔔 НОВАЯ ЗАЯВКА!\n\nКлиент: ${order.name || "не указал"}\nТелефон: ${order.phone || from}\nТовар: ${order.product}\nКоличество: ${order.quantity || "уточнить"}\n\nНомер чата: ${from}`;
@@ -41,7 +44,14 @@ async function handleMessage(from, text) {
   // Ignore messages from manager number to avoid loops
   if (from === MANAGER_PHONE) return;
 
+  // Handle voice messages
+  if (text === "__VOICE_MESSAGE__") {
+    await wa.sendText(from, "К сожалению, я не могу прослушать голосовое сообщение. Напишите, пожалуйста, текстом - и я помогу подобрать керамогранит!");
+    return;
+  }
+
   console.log(`[IN] ${from}: ${text}`);
+  
   addToHistory(from, "user", text);
 
   const result = await ai.processMessage(text, getHistory(from));
@@ -68,6 +78,18 @@ async function handleMessage(from, text) {
 
     // Send order to manager
     await notifyManager(from, result.order);
+  } else if (result.type === "address") {
+    // Send address + schedule to client
+    await wa.sendText(from, result.text);
+    addToHistory(from, "assistant", result.text);
+
+    // Notify manager that client asked for address
+    if (!knownClients.has(from)) {
+      knownClients.add(from);
+      const notify = `📍 Клиент запросил адрес магазина!\nНомер: +${from}\nWhatsApp: wa.me/${from}`;
+      await wa.sendText(MANAGER_PHONE, notify);
+      console.log(`[ADDRESS] ${from} - менеджер оповещен`);
+    }
   } else {
     await wa.sendText(from, result.text);
     addToHistory(from, "assistant", result.text);
